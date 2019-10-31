@@ -6,13 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/10 | Hexo</title>
+  <title>Oracle学习笔记二 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;10&#x2F;index.html">
+  <meta name="description" content="第五章 流程控制语句1，    无条件循环 loop2，    2，while 循环3，    3，for 循环 例：—删除同一本书多余的记录，只留一个记录set serverout on;declarebookcount number;maxId number;begin  loop    select count(bookname) into bookcount from t_book whe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle学习笔记二">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;22&#x2F;%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第五章 流程控制语句1，    无条件循环 loop2，    2，while 循环3，    3，for 循环 例：—删除同一本书多余的记录，只留一个记录set serverout on;declarebookcount number;maxId number;begin  loop    select count(bookname) into bookcount from t_book whe">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-31T11:32:34.597Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -149,103 +152,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-我的第二篇文章" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Oracle学习笔记二
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" class="archive-article-date">
+
+        
+        <a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/" class="archive-article-date">
   	<time datetime="2019-10-22T13:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">Oracle学习笔记一</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第五章-流程控制语句"><a href="#第五章-流程控制语句" class="headerlink" title="第五章 流程控制语句"></a>第五章 流程控制语句</h2><p>1，    无条件循环 loop<br>2，    2，while 循环<br>3，    3，for 循环</p>
+<p>例：<br>—删除同一本书多余的记录，只留一个记录<br>set serverout on;<br>declare<br>bookcount number;<br>maxId number;<br>begin<br>  loop<br>    select count(bookname) into bookcount from t_book where bookname=’微生物学’;<br>    dbms_output.put_line(‘该书共有：’||bookcount||’本’);<br>    if bookcount&gt;1 then<br>      select max(id) into maxId from t_book where bookname=’微生物学’;<br>      dbms_output.put_line(‘该书对应最大ID：’||maxId);<br>      delete from t_book where id=maxId;<br>      commit;<br>    else exit;<br>    end if;<br>  end loop;<br>end;</p>
+<hr>
+<h2 id="第六章-游标"><a href="#第六章-游标" class="headerlink" title="第六章 游标"></a>第六章 游标</h2><p>使用游标，我们可以对查询的结果、对行、列数据进行更加细致的处理，以及对其他DML操作进行判断等操作。</p>
+<p>显示游标<br>——列游标<br>set serverout on;<br>declare cursor cu_emp is select empno,ename,sal from emp;<br>e_no emp.empno%type;<br>e_name emp.ename%type;<br>e_sal emp.sal%type;<br>begin<br>  open cu_emp;<br>  fetch cu_emp into e_no,e_name,e_sal;<br>  while cu_emp%found  loop<br>        dbms_output.put_line(‘编号：’||e_no||’，姓名：’||e_name||’,薪水：’||e_sal);<br>        fetch cu_emp into e_no,e_name,e_sal;<br>   end loop;<br>   close cu_emp;<br>end;</p>
+<p>——行游标<br>set serverout on;<br>declare cursor cu_emp is select * from emp;<br>e emp%rowtype;<br>begin<br>  open cu_emp;<br>  fetch cu_emp into e;<br>  while cu_emp%found  loop<br>        dbms_output.put_line(‘编号：’||e.empno||’，姓名：’||e.ename||’,薪水：’||e.sal);<br>        fetch cu_emp into e;<br>   end loop;<br>   close cu_emp;<br>end;</p>
+<p>隐式游标<br>–隐式游标</p>
+<p>begin<br>  if sql%isopen then<br>    dbms_output.put_line(‘隐式游标已打开’);<br>  else<br>    dbms_output.put_line(‘隐式游标未打开’);<br>  end if;<br>end;</p>
+<p>declare e_count number;<br>begin<br>  select count(*) into e_count from emp;<br>  dbms_output.put_line(‘游标捕获的记录数：’||sql%rowcount);<br>end;</p>
+<hr>
+<h2 id="第七章-触发器"><a href="#第七章-触发器" class="headerlink" title="第七章 触发器"></a>第七章 触发器</h2><p>语句触发器<br>针对整个表，作用于整个表操作<br>语法结构<br>Create trigger 触发器名<br>Before/after 触发动作<br>On 作用对象<br>示例：<br>create or replace trigger tr_book2<br>before insert or delete<br>on t_book<br>begin<br>  if user!=’SCOTT’ then<br>    raise_application_error(-20001,’权限不足’);<br>  end if;<br>end;</p>
+<p>create or replace trigger tr_book_log<br>after insert or update or delete<br>on t_book<br>begin<br>  if inserting then<br>    insert into t_book_log values(user,’insert’,sysdate);<br>  else if updating then<br>    insert into t_book_log values(user,’update’,sysdate);<br>  else if deleting then<br>    insert into t_book_log values(user,’delete’,sysdate);<br>  end if;<br>  end if;<br>  end if;<br>end;</p>
+<p>行触发器<br>针对行记录<br>语法结构<br>Create trigger 触发器名<br>Before/after 触发动作<br>For each row<br>On 作用对象<br>示例：<br>create or replace trigger tr_book_add<br>after insert<br>on t_book<br>for each row<br>begin<br>  update t_booktype set num=num+1 where id=:new.typeid;<br>end;</p>
+<hr>
+<h2 id="第八章-Oracle函数"><a href="#第八章-Oracle函数" class="headerlink" title="第八章 Oracle函数"></a>第八章 Oracle函数</h2><p>语法结构<br>Create function 函数名称 return 返回值类型 as<br>Begin<br>…<br>End 函数名称；</p>
+<p>例子：<br>create function getBookCount return number as<br>begin<br>  declare book_count number;<br>  begin<br>    select count(*) into book_count from t_book;<br>    return book_count;<br>  end;<br>end getBookCount;</p>
+<p>调用：<br>set serveroutput on;<br>begin<br>  dbms_output.put_line(‘表t_book有’||getBookCount()||’条数据’);<br>end；</p>
+<hr>
+<h2 id="第九章-Oracle存储过程"><a href="#第九章-Oracle存储过程" class="headerlink" title="第九章 Oracle存储过程"></a>第九章 Oracle存储过程</h2><p>语法结构<br>Create procedure 存储过程名称 as<br>Begin<br>…<br>End </p>
+<p>In 只进不出<br>Out 只出不进<br>In out 可进可出</p>
+<p>例：<br>create procedure addBook(bookName in varchar2, typeId in number) as<br>begin<br>    declare maxId number;<br>    begin<br>        select max(id) into maxId from t_book;<br>        insert into t_book valuse(maxId+1,bookName,typeId);<br>    end;<br>end addBook;</p>
+<p>调用：<br>execute addBook(‘mysql入门到跑路’,1);</p>
+<hr>
+<h2 id="第十章-Oracle权限"><a href="#第十章-Oracle权限" class="headerlink" title="第十章 Oracle权限"></a>第十章 Oracle权限</h2><p>Oracle 权限分为系统权限和对象权限<br>系统权限是Oracle内置的，与具体对象无关的权限，比如创建表的权限、连接数据库的权限；<br>对象权限是对具体对象的权限，比如表、视图、触发器等的操作权限。</p>
+<p>系统权限视图：system_privilege_map<br>权限分配视图：dba_sys_privs<br>回收系统权限：revoke 权限 from 用户;</p>
+<p>对象权限分配<br>用户表权限视图： dba_tab_privs<br>给对象授权 grant 权限 on 对象 from 用户;</p>
+<p>回收权限<br>revoke 对象权限 on 对象 from 用户;</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/" class="archive-article-date">
-  	<time datetime="2019-10-22T13:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Oracle学习笔记一
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/22/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/">Oracle学习笔记二</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/22/hello-world/" class="archive-article-date">
-  	<time datetime="2019-10-22T13:34:24.590Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/22/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -268,8 +360,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

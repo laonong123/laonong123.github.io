@@ -158,7 +158,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">我的第一篇文章</a>
+      <a class="article-title" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">Oracle学习笔记一</a>
     </h1>
   
 
@@ -171,10 +171,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
+        <h2 id="第一章-字符串类型及函数"><a href="#第一章-字符串类型及函数" class="headerlink" title="第一章 字符串类型及函数"></a>第一章 字符串类型及函数</h2><p>字符串类型分3种，char(n)、varchar(n)、varchar2(n).<br>char(n) 固定长度字符串，假如长度不足n,右边空格补齐；<br>varchar(n) 可变长度字符串，假如长度不足n，右边不会补齐；<br>varchar2(n) 可变长度字符串，Oracle官方推荐使用，向后兼容性好。</p>
+<p>char(n) VS varchar2(n), vhar(n)查询效率较高，varchar2(n) 存储空间相对较小。</p>
+<p>lpad() 向左补齐字符串： select lpad(stuno,6,’0’) from t_user;<br>rpad() 向右补齐字符串： select rpad(stuno,6,’0’) from t_user;<br>lower() 返回字符串小写：select lower(userName) from t_user;<br>upper() 返回字符串小写：select upper(userName) from t_user;</p>
 <hr>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
+<h2 id="第二章-数值类型及函数"><a href="#第二章-数值类型及函数" class="headerlink" title="第二章 数值类型及函数"></a>第二章 数值类型及函数</h2><p>number 是 oracle 中的数据类型；number(precision,scale)；<br> Precision，scale 均可选；<br>Precision 代表精度，sacle 代表小数位的位数；Precision 范围[1,38] scale 范围[-84,127] 举例：<br>12345.678 Precision 是 8 scale 是 3；<br>number(6,3)类型和number(6,-3)类型插入数据的结果如下：</p>
+<p>//abs()函数<br>应用例子：<br>select abs(n1) from t_number where id=1;<br>//round()函数四舍五入<br>select round(n1,2) from t_number where id=1;//解释：round(n1,2)中的第二个参数2为小数的位数如果只有一个参数像round(n1)默认就没有小数了<br>//向上取整ceil()<br>select ceil(12.4) from dual;//输出13<br>select ceil(-12,3)from dual;//输出-12<br>//向下取整floor()<br>select ceil(12.4) from dual;//输出12<br>//取模函数mod(5,3)<br>select mod(5,3) from dual;//输出2<br>//正负函数sign()<br>select sign(0)from dual;//输出0<br>select sign(-12)from dual;//输出-1<br>select sign(212)from dual;//输出1</p>
 <hr>
+<h2 id="第三章-日期类型及函数"><a href="#第三章-日期类型及函数" class="headerlink" title="第三章 日期类型及函数"></a>第三章 日期类型及函数</h2><p>Date 和 timestamp(时间戳)<br>Date包含信息centry(世纪信息) year 、month、day、hour、minute、second<br>timestamp 一般用于日期要求非常精确的情况，精确到毫秒级<br>insert into t_date values(1,sysdate,systimetamp);<br>select sysdate from dual;<br>select systimestamp from dual;</p>
+<p>Months_between 返回两个日期的相差月数:<br>select months_between(d1,d2) from t_date where id=1;<br>next_day 返回特定日期之后的一周内的日期：<br>select next_day(d1,2) from t_date where id=1;</p>
+<hr>
+<h2 id="第四章-其他常用函数"><a href="#第四章-其他常用函数" class="headerlink" title="第四章 其他常用函数"></a>第四章 其他常用函数</h2><p>Max 求最大值：select max(sal) from emp;<br>min 求最小值：select min(sal) from emp;<br>avg 求平均值：select avg(sal) from emp;<br>sum 求和：select sum(sal) from emp;<br>count 统计记录值：select count(sal) from emp;</p>
+<p>Nvl 空值处理：select ename,nvl(sal,0) from emp;<br>Oracle分页：<br>select * from (select a*,rownum rn from(select * from emp)A where rownum&lt;=10) where rn&gt;5;</p>
+<p>条件判断式<br>between and 范围查询：<br>select * from emp where sal between 900 and 1100;<br>select * from emp where sal&gt;=900 and sal&lt;=1100;</p>
+<p>in 集合范围:<br>select ename,hiredate from emp where ename in (select distinct ename from bonus);</p>
+<p>like 模糊查询：<br>select * from emp where ename like ‘%M%’;<br>select * from emp where ename like ‘M%’;<br>select * from emp where ename like ‘_M%’;</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
 
       
@@ -189,6 +200,96 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-我的第二篇文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/">Oracle学习笔记二</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/" class="archive-article-date">
+  	<time datetime="2019-10-22T13:53:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="第五章-流程控制语句"><a href="#第五章-流程控制语句" class="headerlink" title="第五章 流程控制语句"></a>第五章 流程控制语句</h2><p>1，    无条件循环 loop<br>2，    2，while 循环<br>3，    3，for 循环</p>
+<p>例：<br>—删除同一本书多余的记录，只留一个记录<br>set serverout on;<br>declare<br>bookcount number;<br>maxId number;<br>begin<br>  loop<br>    select count(bookname) into bookcount from t_book where bookname=’微生物学’;<br>    dbms_output.put_line(‘该书共有：’||bookcount||’本’);<br>    if bookcount&gt;1 then<br>      select max(id) into maxId from t_book where bookname=’微生物学’;<br>      dbms_output.put_line(‘该书对应最大ID：’||maxId);<br>      delete from t_book where id=maxId;<br>      commit;<br>    else exit;<br>    end if;<br>  end loop;<br>end;</p>
+<hr>
+<h2 id="第六章-游标"><a href="#第六章-游标" class="headerlink" title="第六章 游标"></a>第六章 游标</h2><p>使用游标，我们可以对查询的结果、对行、列数据进行更加细致的处理，以及对其他DML操作进行判断等操作。</p>
+<p>显示游标<br>——列游标<br>set serverout on;<br>declare cursor cu_emp is select empno,ename,sal from emp;<br>e_no emp.empno%type;<br>e_name emp.ename%type;<br>e_sal emp.sal%type;<br>begin<br>  open cu_emp;<br>  fetch cu_emp into e_no,e_name,e_sal;<br>  while cu_emp%found  loop<br>        dbms_output.put_line(‘编号：’||e_no||’，姓名：’||e_name||’,薪水：’||e_sal);<br>        fetch cu_emp into e_no,e_name,e_sal;<br>   end loop;<br>   close cu_emp;<br>end;</p>
+<p>——行游标<br>set serverout on;<br>declare cursor cu_emp is select * from emp;<br>e emp%rowtype;<br>begin<br>  open cu_emp;<br>  fetch cu_emp into e;<br>  while cu_emp%found  loop<br>        dbms_output.put_line(‘编号：’||e.empno||’，姓名：’||e.ename||’,薪水：’||e.sal);<br>        fetch cu_emp into e;<br>   end loop;<br>   close cu_emp;<br>end;</p>
+<p>隐式游标<br>–隐式游标</p>
+<p>begin<br>  if sql%isopen then<br>    dbms_output.put_line(‘隐式游标已打开’);<br>  else<br>    dbms_output.put_line(‘隐式游标未打开’);<br>  end if;<br>end;</p>
+<p>declare e_count number;<br>begin<br>  select count(*) into e_count from emp;<br>  dbms_output.put_line(‘游标捕获的记录数：’||sql%rowcount);<br>end;</p>
+<hr>
+<h2 id="第七章-触发器"><a href="#第七章-触发器" class="headerlink" title="第七章 触发器"></a>第七章 触发器</h2><p>语句触发器<br>针对整个表，作用于整个表操作<br>语法结构<br>Create trigger 触发器名<br>Before/after 触发动作<br>On 作用对象<br>示例：<br>create or replace trigger tr_book2<br>before insert or delete<br>on t_book<br>begin<br>  if user!=’SCOTT’ then<br>    raise_application_error(-20001,’权限不足’);<br>  end if;<br>end;</p>
+<p>create or replace trigger tr_book_log<br>after insert or update or delete<br>on t_book<br>begin<br>  if inserting then<br>    insert into t_book_log values(user,’insert’,sysdate);<br>  else if updating then<br>    insert into t_book_log values(user,’update’,sysdate);<br>  else if deleting then<br>    insert into t_book_log values(user,’delete’,sysdate);<br>  end if;<br>  end if;<br>  end if;<br>end;</p>
+<p>行触发器<br>针对行记录<br>语法结构<br>Create trigger 触发器名<br>Before/after 触发动作<br>For each row<br>On 作用对象<br>示例：<br>create or replace trigger tr_book_add<br>after insert<br>on t_book<br>for each row<br>begin<br>  update t_booktype set num=num+1 where id=:new.typeid;<br>end;</p>
+<hr>
+<h2 id="第八章-Oracle函数"><a href="#第八章-Oracle函数" class="headerlink" title="第八章 Oracle函数"></a>第八章 Oracle函数</h2><p>语法结构<br>Create function 函数名称 return 返回值类型 as<br>Begin<br>…<br>End 函数名称；</p>
+<p>例子：<br>create function getBookCount return number as<br>begin<br>  declare book_count number;<br>  begin<br>    select count(*) into book_count from t_book;<br>    return book_count;<br>  end;<br>end getBookCount;</p>
+<p>调用：<br>set serveroutput on;<br>begin<br>  dbms_output.put_line(‘表t_book有’||getBookCount()||’条数据’);<br>end；</p>
+<hr>
+<h2 id="第九章-Oracle存储过程"><a href="#第九章-Oracle存储过程" class="headerlink" title="第九章 Oracle存储过程"></a>第九章 Oracle存储过程</h2><p>语法结构<br>Create procedure 存储过程名称 as<br>Begin<br>…<br>End </p>
+<p>In 只进不出<br>Out 只出不进<br>In out 可进可出</p>
+<p>例：<br>create procedure addBook(bookName in varchar2, typeId in number) as<br>begin<br>    declare maxId number;<br>    begin<br>        select max(id) into maxId from t_book;<br>        insert into t_book valuse(maxId+1,bookName,typeId);<br>    end;<br>end addBook;</p>
+<p>调用：<br>execute addBook(‘mysql入门到跑路’,1);</p>
+<hr>
+<h2 id="第十章-Oracle权限"><a href="#第十章-Oracle权限" class="headerlink" title="第十章 Oracle权限"></a>第十章 Oracle权限</h2><p>Oracle 权限分为系统权限和对象权限<br>系统权限是Oracle内置的，与具体对象无关的权限，比如创建表的权限、连接数据库的权限；<br>对象权限是对具体对象的权限，比如表、视图、触发器等的操作权限。</p>
+<p>系统权限视图：system_privilege_map<br>权限分配视图：dba_sys_privs<br>回收系统权限：revoke 权限 from 用户;</p>
+<p>对象权限分配<br>用户表权限视图： dba_tab_privs<br>给对象授权 grant 权限 on 对象 from 用户;</p>
+<p>回收权限<br>revoke 对象权限 on 对象 from 用户;</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/">展开全文 >></a>
         </p>
       
 

@@ -6,16 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>我的第一篇文章 | Hexo</title>
+  <title>Oracle学习笔记一 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一章内容  第二章内容  参考文献www.baidu.com">
+  <meta name="description" content="第一章 字符串类型及函数字符串类型分3种，char(n)、varchar(n)、varchar2(n).char(n) 固定长度字符串，假如长度不足n,右边空格补齐；varchar(n) 可变长度字符串，假如长度不足n，右边不会补齐；varchar2(n) 可变长度字符串，Oracle官方推荐使用，向后兼容性好。 char(n) VS varchar2(n), vhar(n)查询效率较高，varc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇文章">
+<meta property="og:title" content="Oracle学习笔记一">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;22&#x2F;%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="第一章内容  第二章内容  参考文献www.baidu.com">
+<meta property="og:description" content="第一章 字符串类型及函数字符串类型分3种，char(n)、varchar(n)、varchar2(n).char(n) 固定长度字符串，假如长度不足n,右边空格补齐；varchar(n) 可变长度字符串，假如长度不足n，右边不会补齐；varchar2(n) 可变长度字符串，Oracle官方推荐使用，向后兼容性好。 char(n) VS varchar2(n), vhar(n)查询效率较高，varc">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-31T10:08:51.125Z">
+<meta property="og:updated_time" content="2019-10-31T11:32:39.196Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -159,7 +159,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      我的第一篇文章
+      Oracle学习笔记一
     </h1>
   
 
@@ -172,10 +172,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>内容</p>
+        <h2 id="第一章-字符串类型及函数"><a href="#第一章-字符串类型及函数" class="headerlink" title="第一章 字符串类型及函数"></a>第一章 字符串类型及函数</h2><p>字符串类型分3种，char(n)、varchar(n)、varchar2(n).<br>char(n) 固定长度字符串，假如长度不足n,右边空格补齐；<br>varchar(n) 可变长度字符串，假如长度不足n，右边不会补齐；<br>varchar2(n) 可变长度字符串，Oracle官方推荐使用，向后兼容性好。</p>
+<p>char(n) VS varchar2(n), vhar(n)查询效率较高，varchar2(n) 存储空间相对较小。</p>
+<p>lpad() 向左补齐字符串： select lpad(stuno,6,’0’) from t_user;<br>rpad() 向右补齐字符串： select rpad(stuno,6,’0’) from t_user;<br>lower() 返回字符串小写：select lower(userName) from t_user;<br>upper() 返回字符串小写：select upper(userName) from t_user;</p>
 <hr>
-<h2 id="第二章"><a href="#第二章" class="headerlink" title="第二章"></a>第二章</h2><p>内容</p>
+<h2 id="第二章-数值类型及函数"><a href="#第二章-数值类型及函数" class="headerlink" title="第二章 数值类型及函数"></a>第二章 数值类型及函数</h2><p>number 是 oracle 中的数据类型；number(precision,scale)；<br> Precision，scale 均可选；<br>Precision 代表精度，sacle 代表小数位的位数；Precision 范围[1,38] scale 范围[-84,127] 举例：<br>12345.678 Precision 是 8 scale 是 3；<br>number(6,3)类型和number(6,-3)类型插入数据的结果如下：</p>
+<p>//abs()函数<br>应用例子：<br>select abs(n1) from t_number where id=1;<br>//round()函数四舍五入<br>select round(n1,2) from t_number where id=1;//解释：round(n1,2)中的第二个参数2为小数的位数如果只有一个参数像round(n1)默认就没有小数了<br>//向上取整ceil()<br>select ceil(12.4) from dual;//输出13<br>select ceil(-12,3)from dual;//输出-12<br>//向下取整floor()<br>select ceil(12.4) from dual;//输出12<br>//取模函数mod(5,3)<br>select mod(5,3) from dual;//输出2<br>//正负函数sign()<br>select sign(0)from dual;//输出0<br>select sign(-12)from dual;//输出-1<br>select sign(212)from dual;//输出1</p>
 <hr>
+<h2 id="第三章-日期类型及函数"><a href="#第三章-日期类型及函数" class="headerlink" title="第三章 日期类型及函数"></a>第三章 日期类型及函数</h2><p>Date 和 timestamp(时间戳)<br>Date包含信息centry(世纪信息) year 、month、day、hour、minute、second<br>timestamp 一般用于日期要求非常精确的情况，精确到毫秒级<br>insert into t_date values(1,sysdate,systimetamp);<br>select sysdate from dual;<br>select systimestamp from dual;</p>
+<p>Months_between 返回两个日期的相差月数:<br>select months_between(d1,d2) from t_date where id=1;<br>next_day 返回特定日期之后的一周内的日期：<br>select next_day(d1,2) from t_date where id=1;</p>
+<hr>
+<h2 id="第四章-其他常用函数"><a href="#第四章-其他常用函数" class="headerlink" title="第四章 其他常用函数"></a>第四章 其他常用函数</h2><p>Max 求最大值：select max(sal) from emp;<br>min 求最小值：select min(sal) from emp;<br>avg 求平均值：select avg(sal) from emp;<br>sum 求和：select sum(sal) from emp;<br>count 统计记录值：select count(sal) from emp;</p>
+<p>Nvl 空值处理：select ename,nvl(sal,0) from emp;<br>Oracle分页：<br>select * from (select a*,rownum rn from(select * from emp)A where rownum&lt;=10) where rn&gt;5;</p>
+<p>条件判断式<br>between and 范围查询：<br>select * from emp where sal between 900 and 1100;<br>select * from emp where sal&gt;=900 and sal&lt;=1100;</p>
+<p>in 集合范围:<br>select ename,hiredate from emp where ename in (select distinct ename from bonus);</p>
+<p>like 模糊查询：<br>select * from emp where ename like ‘%M%’;<br>select * from emp where ename like ‘M%’;<br>select * from emp where ename like ‘_M%’;</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
 
       
@@ -271,8 +282,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/10/22/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2019/10/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87%E7%AB%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Oracle学习笔记二</div>
       <i class="icon-circle-right"></i>
     </a>
   
